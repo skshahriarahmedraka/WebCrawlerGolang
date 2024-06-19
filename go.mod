@@ -10,6 +10,7 @@ require (
 	github.com/antchfx/htmlquery v1.3.1 // indirect
 	github.com/antchfx/xmlquery v1.4.0 // indirect
 	github.com/antchfx/xpath v1.3.0 // indirect
+	github.com/blang/semver v3.5.1+incompatible // indirect
 	github.com/chromedp/cdproto v0.0.0-20240202021202-6d0b6a386732 // indirect
 	github.com/chromedp/sysutil v1.0.0 // indirect
 	github.com/gobwas/glob v0.2.3 // indirect
@@ -39,4 +40,5 @@ require (
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
 	github.com/k0kubun/pp/v3 v3.2.0
 	github.com/spf13/pflag v1.0.5 // indirect
+	github.com/tebeka/selenium v0.9.9
 )
