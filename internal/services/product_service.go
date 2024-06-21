@@ -10,7 +10,7 @@ import (
 	"github.com/tebeka/selenium"
 )
 
-func FetchProductData(webDriver selenium.WebDriver, baseUrl, id string) {
+func FetchProductData(webDriver selenium.WebDriver, baseUrl, id string) models.Product {
 	var product models.Product
 
 	url := baseUrl + "/" + id
@@ -19,14 +19,48 @@ func FetchProductData(webDriver selenium.WebDriver, baseUrl, id string) {
 	if err := webDriver.Get(url); err != nil {
 		pp.Println("🚀 ~ file: product_service.go ~ line 13 ~ funcFetchProductData ~ err", err)
 	}
+	///////////////////////////////////////////
 
-	if err := utils.ScrollToBottom(webDriver); err != nil {
-		pp.Println("🚀 ~ file: product_service.go ~ line 36 ~ iferr:=utils.ScrollToBottom ~ err : ", err)
-	}
+	// if err := utils.WaitForPageLoad(webDriver); err != nil {
+	// 	log.Fatalf("Error waiting for page load: %v", err)
+	// }
 
-	_, err := webDriver.PageSource()
+	// if err := utils.ScrollToBottom(webDriver); err != nil {
+	// 	log.Fatalf("Error scrolling to bottom: %v", err)
+	// }
+
+	// err := utils.Scroll(webDriver, ".BVDITitle")
+	// if err != nil {
+	// 	pp.Println("🚀 ~ file: product_service.go ~ line 47 ~ funcFetchProductData ~ err : ", err)
+	// 	_ = utils.Scroll(webDriver, ".js-articlePromotion")
+	// }
+
+	// err = webDriver.WaitWithTimeoutAndInterval(func(wd selenium.WebDriver) (bool, error) {
+	// 	_, err := wd.FindElement(selenium.ByCSSSelector, "span.BVRRNumber.BVRRBuyAgainTotal")
+	// 	if err == nil {
+	// 		return true, nil
+	// 	}
+	// 	return false, nil
+	// }, 5*time.Second, 500*time.Millisecond)
+	// if err != nil {
+	// 	pp.Println("🚀 ~ file: product_service.go ~ line 24 ~ err:=webDriver.WaitWithTimeoutAndInterval ~ err : ", err)
+	// }
+
+	/////////////////////////////////////////////////////
+	breadCrumb := utils.FetchBreadcrumbs(webDriver)
+	product.BreadCrumb = strings.Join(breadCrumb, " > ")
+
+	product.Catagory = utils.FetchCatagory(webDriver)
+	product.ProductName = utils.FetchTitle(webDriver)
+	product.Pricing = utils.FetchPrice(webDriver)
+	product.AvailableSize = utils.FetchAvailableSizes(webDriver)
+	product.SenseOfTheSize = utils.FetchSenseOfTheSize(webDriver)
+
+
+	err := utils.Scroll(webDriver, "h2.heading.itemName.test-commentItem-topHeading")
 	if err != nil {
-		pp.Println("🚀 ~ file: product_service.go ~ line 46 ~ funcFetchProductData ~ err : ", err)
+		pp.Println("🚀 ~ file: product_service.go ~ line 36 ~ funcFetchProductData ~ err : ", err)
+		_ = utils.Scroll(webDriver, ".js-articlePromotion")
 	}
 
 	err = webDriver.WaitWithTimeoutAndInterval(func(wd selenium.WebDriver) (bool, error) {
@@ -40,20 +74,20 @@ func FetchProductData(webDriver selenium.WebDriver, baseUrl, id string) {
 		pp.Println("🚀 ~ file: product_service.go ~ line 24 ~ err:=webDriver.WaitWithTimeoutAndInterval ~ err : ", err)
 	}
 
-	
+	// _, err = webDriver.PageSource()
+	// if err != nil {
+	// 	pp.Println("🚀 ~ file: product_service.go ~ line 46 ~ funcFetchProductData ~ err : ", err)
+	// }
+	/////////////////////////////////////////////////
+
+	// if err := utils.ScrollToBottom(webDriver); err != nil {
+	// 	pp.Println("🚀 ~ file: product_service.go ~ line 36 ~ iferr:=utils.ScrollToBottom ~ err : ", err)
+	// }
 
 	// _, err = webDriver.ExecuteScript("window.scrollTo(0, document.body.scrollHeight);", nil)
 	// if err != nil {
 	// 	pp.Println("🚀 ~ file: product_service.go ~ line 41 ~ funcFetchProductData ~ err : ", err)
 	// }
-
-	// err = utils.Scroll(webDriver, "div.siteMap")
-	// if err != nil {
-	// 	pp.Println("🚀 ~ file: product_service.go ~ line 36 ~ funcFetchProductData ~ err : ", err)
-	// 	_ = utils.Scroll(webDriver, ".js-articlePromotion")
-	// }
-
-	
 
 	// fmt.Println("🚀 ~ file: product_service.go ~ line 39 ~ funcFetchProductData ~ htmlSource : ", htmlSource)
 
@@ -63,19 +97,20 @@ func FetchProductData(webDriver selenium.WebDriver, baseUrl, id string) {
 	// 	_ = utils.Scroll(webDriver, ".js-articlePromotion")
 	// }
 
-	breadCrumb := utils.FetchBreadcrumbs(webDriver)
-	product.BreadCrumb = strings.Join(breadCrumb, " > ")
 	product.ImageUrls = utils.FetchImages(webDriver)
-	product.Catagory = utils.FetchCatagory(webDriver)
-	product.ProductName = utils.FetchTitle(webDriver)
-	product.Pricing = utils.FetchPrice(webDriver)
-	product.AvailableSize = utils.FetchAvailableSizes(webDriver)
-	product.SenseOfTheSize = utils.FetchSenseOfTheSize(webDriver)
+
 	product.TitleOfDescription = utils.FetchTitleOfDescription(webDriver)
 	product.GeneralDescription = utils.FetchGeneralDescription(webDriver)
 	product.GeneralDescriptionItemized = utils.FetchGeneralDescriptionItemized(webDriver)
 	product.TaleOfSize = utils.FetchTaleOfSize(webDriver)
 	product.SpecialFunction = utils.FetchSpecialFunction(webDriver)
+
+	// pageSource, err := webDriver.PageSource()
+	// _= pageSource
+	// if err != nil {
+	// 	pp.Println("🚀 ~ file: product_service.go ~ line 46 ~ funcFetchProductData ~ err : ", err)
+	// }
+
 	product.Rating = utils.FetchRating(webDriver)
 	product.NumberOfReviews = utils.FetchNumberOfReviews(webDriver)
 	product.RecommendedRate = utils.FetchRecommendedRate(webDriver)
@@ -83,4 +118,6 @@ func FetchProductData(webDriver selenium.WebDriver, baseUrl, id string) {
 	product.ReviewRatings = utils.FetchReviewRatings(webDriver)
 	product.KWs = utils.FetchKWs(webDriver)
 	pp.Println("🚀 ~ file: product_service.go ~ line 31 ~ funcFetchProductData ~ product : ", product)
+
+	return product
 }

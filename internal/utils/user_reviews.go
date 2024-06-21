@@ -18,7 +18,7 @@ func FetchUserReviews(webDriver selenium.WebDriver) []models.UserReview {
 		review := models.UserReview{}
 
 		// Extract review date
-		dateElem, _ := reviewElem.FindElement(selenium.ByCSSSelector, ".BVRRReviewDate")
+		dateElem, _ := reviewElem.FindElement(selenium.ByCSSSelector, ".BVRRValue.BVRRReviewDate")
 		date, _ := dateElem.Text()
 		review.Date = date
 

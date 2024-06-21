@@ -11,8 +11,8 @@ import (
 )
 
 type CrawlerCommand struct {
-	ProductListUrl string
-	Url            string
+	BaseUrl string
+	ProductID            string
 	Count          int
 }
 
@@ -36,7 +36,7 @@ func (c *CrawlerCommand) Long() string {
 
 func (c *CrawlerCommand) Run(ctx context.Context, args []string) error {
 
-	if  err := adidasmen.Main(c.ProductListUrl, c.Url, c.Count) ; err !=nil {
+	if  err := adidasmen.Main(c.BaseUrl, c.ProductID, c.Count) ; err !=nil {
 		log.Println(err)
 		return err 
 	}
@@ -44,12 +44,12 @@ func (c *CrawlerCommand) Run(ctx context.Context, args []string) error {
 }
 
 func (c *CrawlerCommand) Setup(cmd *cobra.Command) {
-	cmd.Flags().StringVar(&c.ProductListUrl, "product-list-url", "", "URL of the product list")
-	cmd.Flags().StringVar(&c.Url, "url", "", "URL to crawl")
+	cmd.Flags().StringVar(&c.BaseUrl, "base-url", "", "URL of the product list")
+	cmd.Flags().StringVar(&c.ProductID, "productid", "", "URL to crawl")
 	cmd.Flags().IntVar(&c.Count, "count", 1, "Number of item to crawl")
 
-	cmd.MarkFlagRequired("product-list-url")
-	cmd.MarkFlagRequired("url")
+	cmd.MarkFlagRequired("base-url")
+	cmd.MarkFlagRequired("productid")
 	cmd.MarkFlagRequired("count")
 
 	cmd.Run = func(cmd *cobra.Command, args []string) {
