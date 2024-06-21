@@ -19,34 +19,8 @@ func FetchProductData(webDriver selenium.WebDriver, baseUrl, id string) models.P
 	if err := webDriver.Get(url); err != nil {
 		pp.Println("🚀 ~ file: product_service.go ~ line 13 ~ funcFetchProductData ~ err", err)
 	}
-	///////////////////////////////////////////
+	
 
-	// if err := utils.WaitForPageLoad(webDriver); err != nil {
-	// 	log.Fatalf("Error waiting for page load: %v", err)
-	// }
-
-	// if err := utils.ScrollToBottom(webDriver); err != nil {
-	// 	log.Fatalf("Error scrolling to bottom: %v", err)
-	// }
-
-	// err := utils.Scroll(webDriver, ".BVDITitle")
-	// if err != nil {
-	// 	pp.Println("🚀 ~ file: product_service.go ~ line 47 ~ funcFetchProductData ~ err : ", err)
-	// 	_ = utils.Scroll(webDriver, ".js-articlePromotion")
-	// }
-
-	// err = webDriver.WaitWithTimeoutAndInterval(func(wd selenium.WebDriver) (bool, error) {
-	// 	_, err := wd.FindElement(selenium.ByCSSSelector, "span.BVRRNumber.BVRRBuyAgainTotal")
-	// 	if err == nil {
-	// 		return true, nil
-	// 	}
-	// 	return false, nil
-	// }, 5*time.Second, 500*time.Millisecond)
-	// if err != nil {
-	// 	pp.Println("🚀 ~ file: product_service.go ~ line 24 ~ err:=webDriver.WaitWithTimeoutAndInterval ~ err : ", err)
-	// }
-
-	/////////////////////////////////////////////////////
 	breadCrumb := utils.FetchBreadcrumbs(webDriver)
 	product.BreadCrumb = strings.Join(breadCrumb, " > ")
 
@@ -74,28 +48,7 @@ func FetchProductData(webDriver selenium.WebDriver, baseUrl, id string) models.P
 		pp.Println("🚀 ~ file: product_service.go ~ line 24 ~ err:=webDriver.WaitWithTimeoutAndInterval ~ err : ", err)
 	}
 
-	// _, err = webDriver.PageSource()
-	// if err != nil {
-	// 	pp.Println("🚀 ~ file: product_service.go ~ line 46 ~ funcFetchProductData ~ err : ", err)
-	// }
-	/////////////////////////////////////////////////
 
-	// if err := utils.ScrollToBottom(webDriver); err != nil {
-	// 	pp.Println("🚀 ~ file: product_service.go ~ line 36 ~ iferr:=utils.ScrollToBottom ~ err : ", err)
-	// }
-
-	// _, err = webDriver.ExecuteScript("window.scrollTo(0, document.body.scrollHeight);", nil)
-	// if err != nil {
-	// 	pp.Println("🚀 ~ file: product_service.go ~ line 41 ~ funcFetchProductData ~ err : ", err)
-	// }
-
-	// fmt.Println("🚀 ~ file: product_service.go ~ line 39 ~ funcFetchProductData ~ htmlSource : ", htmlSource)
-
-	// err = utils.Scroll(webDriver, ".coordinateItems .carouselListitem")
-	// if err != nil {
-	// 	pp.Println("🚀 ~ file: product_service.go ~ line 36 ~ funcFetchProductData ~ err : ", err)
-	// 	_ = utils.Scroll(webDriver, ".js-articlePromotion")
-	// }
 
 	product.ImageUrls = utils.FetchImages(webDriver)
 
@@ -105,11 +58,7 @@ func FetchProductData(webDriver selenium.WebDriver, baseUrl, id string) models.P
 	product.TaleOfSize = utils.FetchTaleOfSize(webDriver)
 	product.SpecialFunction = utils.FetchSpecialFunction(webDriver)
 
-	// pageSource, err := webDriver.PageSource()
-	// _= pageSource
-	// if err != nil {
-	// 	pp.Println("🚀 ~ file: product_service.go ~ line 46 ~ funcFetchProductData ~ err : ", err)
-	// }
+
 
 	product.Rating = utils.FetchRating(webDriver)
 	product.NumberOfReviews = utils.FetchNumberOfReviews(webDriver)

@@ -2,7 +2,6 @@ package utils
 
 import (
 
-	// "github.com/k0kubun/pp/v3"
 	"strings"
 
 	"github.com/skshahriarahmedraka/WebCrawlerGolang/models"
@@ -12,42 +11,33 @@ import (
 func FetchUserReviews(webDriver selenium.WebDriver) []models.UserReview {
 	userReviews := []models.UserReview{}
 
-	// var userReviews []Review
-	reviewElems, _ := webDriver.FindElements(selenium.ByCSSSelector, ".BVRRContentReview")
-	for _, reviewElem := range reviewElems {
+	reviews, _ := webDriver.FindElements(selenium.ByCSSSelector, ".BVRRContentReview")
+	for _, r := range reviews {
 		review := models.UserReview{}
 
-		// Extract review date
-		dateElem, _ := reviewElem.FindElement(selenium.ByCSSSelector, ".BVRRValue.BVRRReviewDate")
-		date, _ := dateElem.Text()
+		d, _ := r.FindElement(selenium.ByCSSSelector, ".BVRRValue.BVRRReviewDate")
+		date, _ := d.Text()
 		review.Date = date
 
-		// Extract review title
-		titleElem, _ := reviewElem.FindElement(selenium.ByCSSSelector, ".BVRRValue.BVRRReviewTitle")
-		title, _ := titleElem.Text()
+		t, _ := r.FindElement(selenium.ByCSSSelector, ".BVRRValue.BVRRReviewTitle")
+		title, _ := t.Text()
 		review.ReviewTitle = title
 
-		// Extract review description
-		descElem, _ := reviewElem.FindElement(selenium.ByCSSSelector, ".BVRRReviewTextContainer")
-		desc, _ := descElem.Text()
+		des, _ := r.FindElement(selenium.ByCSSSelector, ".BVRRReviewTextContainer")
+		desc, _ := des.Text()
 		review.ReviewDescription = desc
 
-		// Extract review rating
-		ratingElem, _ := reviewElem.FindElement(selenium.ByCSSSelector, ".BVRRNumber.BVRRRatingNumber")
-		ratingText, _ := ratingElem.Text()
+		ra, _ := r.FindElement(selenium.ByCSSSelector, ".BVRRNumber.BVRRRatingNumber")
+		ratingText, _ := ra.Text()
 		review.Rating = ratingText
-		idAttr, _ := reviewElem.GetAttribute("id")
+		idAttr, _ := r.GetAttribute("id")
 
-		// Extract the reviewer ID
 		reviewerID := parseReviewerIDFromId(idAttr)
 
-		// Set the reviewer ID
 		review.ReviewerID = reviewerID
 
-		// Append review to the slice
 		userReviews = append(userReviews, review)
 	}
-	// productMeta.UserReviews = userReviews
 
 	return userReviews
 
